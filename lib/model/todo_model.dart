@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'package:sample_provider/entities/todo.dart';
+
 class TodoModel with ChangeNotifier {
   String _inputText = "";
-  final List<String> _todos = <String>[];
+  final List<Todo> _todos = [];
 
-  List<String> get todos => _todos;
+  List<Todo> get todos => _todos;
 
   void addTodo() {
-    _todos.add(_inputText);
+    _todos.add(Todo(title: _inputText));
     notifyListeners();
   }
 
-  String getTodo(int index) {
+  Todo getTodo(int index) {
     return _todos[index];
   }
 

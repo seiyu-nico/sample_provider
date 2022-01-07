@@ -15,7 +15,9 @@ class SampleProvider extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: TodoList(),
+              child: TodoList(
+                key: UniqueKey(),
+              ),
             ),
             Divider(
               color: Colors.black,
@@ -38,7 +40,7 @@ class TodoList extends StatelessWidget {
       separatorBuilder: (context, index) => Divider(color: Colors.black),
       itemCount: Provider.of<TodoModel>(context).todos.length,
       itemBuilder: (BuildContext context, int index) {
-        return TodoListTile(index: index);
+        return TodoListTile(key: UniqueKey(), index: index);
       },
     );
   }
@@ -54,7 +56,7 @@ class TodoListTile extends StatelessWidget {
       builder: (context, todoModel, child) {
         final todo = todoModel.getTodo(index);
         return ListTile(
-          title: Text(todo),
+          title: Text(todo.title),
         );
       },
     );
