@@ -10,6 +10,7 @@ class TodoModel with ChangeNotifier {
 
   void addTodo() {
     _todos.add(Todo(title: _inputText));
+    setText();
     notifyListeners();
   }
 
@@ -17,7 +18,7 @@ class TodoModel with ChangeNotifier {
     return _todos[index];
   }
 
-  void setText(String text) {
+  void setText({String text = ''}) {
     _inputText = text;
   }
 }
