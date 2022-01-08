@@ -1,28 +1,38 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-import 'package:sample_provider/model/todo_model.dart';
+import 'package:sample_provider/entities/todo.dart';
 
-class SampleProvider extends StatelessWidget {
-  const SampleProvider({Key? key}) : super(key: key);
+class TodoNotUseProviderScreen extends StatefulWidget {
+  @override
+  _TodoNotUseProviderScreenState createState() =>
+      _TodoNotUseProviderScreenState();
+}
+
+class _TodoNotUseProviderScreenState extends State {
+  List<Todo> todos = [];
+
+  void addTodo(String title) {
+    setState(() {
+      todos.add(Todo(title: title));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Providerを使ったサンプル'),
+        title: Text('Providerを使わないサンプル'),
       ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
             Expanded(
-              child: TodoList(
-                key: UniqueKey(),
-              ),
+              child: TodoList(key: UniqueKey(), todos: todos),
             ),
             Divider(
               color: Colors.black,
             ),
-            TodoInput(),
+            TodoInput(addTodo: addTodo),
           ],
         ),
       ),
@@ -31,41 +41,39 @@ class SampleProvider extends StatelessWidget {
 }
 
 class TodoList extends StatelessWidget {
-  const TodoList({Key? key}) : super(key: key);
+  const TodoList({Key? key, required this.todos}) : super(key: key);
+  final List<Todo> todos;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       shrinkWrap: true,
       separatorBuilder: (context, index) => Divider(color: Colors.black),
-      itemCount: Provider.of<TodoModel>(context).todos.length,
+      itemCount: todos.length,
       itemBuilder: (BuildContext context, int index) {
-        return TodoListTile(key: UniqueKey(), index: index);
+        return TodoListTile(key: UniqueKey(), todo: todos[index]);
       },
     );
   }
 }
 
 class TodoListTile extends StatelessWidget {
-  const TodoListTile({Key? key, required this.index}) : super(key: key);
-  final int index;
+  const TodoListTile({Key? key, required this.todo}) : super(key: key);
+  final Todo todo;
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TodoModel>(
-      builder: (context, todoModel, child) {
-        final todo = todoModel.getTodo(index);
-        return ListTile(
-          title: Text(todo.title),
-        );
-      },
+    return ListTile(
+      title: Text(todo.title),
     );
   }
 }
 
 // Todo入力欄
 class TodoInput extends StatelessWidget {
-  TodoInput({Key? key}) : super(key: key);
+  TodoInput({Key? key, required this.addTodo}) : super(key: key);
+  final Function(String) addTodo;
+
   final TextEditingController _controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -79,13 +87,10 @@ class TodoInput extends StatelessWidget {
               border: OutlineInputBorder(),
               labelText: 'todo ...',
             ),
-            onChanged: (text) {
-              Provider.of<TodoModel>(context, listen: false).setText(text);
-            },
           ),
           ElevatedButton(
             onPressed: () {
-              Provider.of<TodoModel>(context, listen: false).addTodo();
+              addTodo(_controller.text);
               _controller.clear();
             },
             child: Text('追加'),
