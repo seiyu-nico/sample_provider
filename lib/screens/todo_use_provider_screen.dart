@@ -86,7 +86,8 @@ class TodoInput extends StatelessWidget {
               labelText: 'todo ...',
             ),
             onChanged: (text) {
-              Provider.of<TodoModel>(context, listen: false).setText(text);
+              Provider.of<TodoModel>(context, listen: false)
+                  .setText(text: text);
             },
           ),
           ElevatedButton(
