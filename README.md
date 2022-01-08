@@ -1,16 +1,25 @@
 # sample_provider
+## Providerを使う場合と使わない場合のサンプル
 
-A new Flutter project.
+## 再描画の違い
+```log
+# Providerを使った場合
+# 1個目追加
+I/flutter (23629): build: TodoList
+I/flutter (23629): build: TodoListTile
+# 2個目追加
+I/flutter (23629): build: TodoList
+2 I/flutter (23629): build: TodoListTile
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Providerを使わない場合
+# 1個目追加
+I/flutter (22885): build: _TodoNotUseProviderScreenState
+I/flutter (22885): build: TodoList
+I/flutter (22885): build: TodoInput
+I/flutter (22885): build: TodoListTile
+# 2個目追加
+I/flutter (22885): build: _TodoNotUseProviderScreenState
+I/flutter (22885): build: TodoList
+I/flutter (22885): build: TodoInput
+2 I/flutter (22885): build: TodoListTile
+```

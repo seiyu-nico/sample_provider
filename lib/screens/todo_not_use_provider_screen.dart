@@ -19,6 +19,7 @@ class _TodoNotUseProviderScreenState extends State {
 
   @override
   Widget build(BuildContext context) {
+    print('build: _TodoNotUseProviderScreenState');
     return Scaffold(
       appBar: AppBar(
         title: Text('Providerを使わないサンプル'),
@@ -46,6 +47,7 @@ class TodoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('build: TodoList');
     return ListView.separated(
       shrinkWrap: true,
       separatorBuilder: (context, index) => Divider(color: Colors.black),
@@ -63,6 +65,7 @@ class TodoListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('build: TodoListTile');
     return ListTile(
       title: Text(todo.title),
     );
@@ -73,10 +76,11 @@ class TodoListTile extends StatelessWidget {
 class TodoInput extends StatelessWidget {
   TodoInput({Key? key, required this.addTodo}) : super(key: key);
   final Function(String) addTodo;
-
   final TextEditingController _controller = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    print('build: TodoInput');
     return Container(
       padding: EdgeInsets.only(top: 10, bottom: 10, right: 40, left: 40),
       child: Column(

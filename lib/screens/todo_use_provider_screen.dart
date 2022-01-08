@@ -5,8 +5,10 @@ import 'package:sample_provider/model/todo_model.dart';
 
 class TodoUseProviderScreen extends StatelessWidget {
   const TodoUseProviderScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    print('build: TodoUseProviderScreen');
     return Scaffold(
       appBar: AppBar(
         title: Text('Providerを使ったサンプル'),
@@ -35,6 +37,7 @@ class TodoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('build: TodoList');
     return ListView.separated(
       shrinkWrap: true,
       separatorBuilder: (context, index) => Divider(color: Colors.black),
@@ -52,6 +55,7 @@ class TodoListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('build: TodoListTile');
     return Consumer<TodoModel>(
       builder: (context, todoModel, child) {
         final todo = todoModel.getTodo(index);
@@ -67,8 +71,10 @@ class TodoListTile extends StatelessWidget {
 class TodoInput extends StatelessWidget {
   TodoInput({Key? key}) : super(key: key);
   final TextEditingController _controller = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    print('build: TodoInput');
     return Container(
       padding: EdgeInsets.only(top: 10, bottom: 10, right: 40, left: 40),
       child: Column(
