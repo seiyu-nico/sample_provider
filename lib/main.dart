@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sample_provider/components/bottom_navigation.dart';
-import 'package:sample_provider/model/todo_model.dart';
+import 'package:sample_provider/models/todo_model.dart';
 
 void main() {
   runApp(
