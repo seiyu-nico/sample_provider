@@ -87,13 +87,17 @@ class TodoListTile extends StatelessWidget {
 }
 
 // Todo入力欄
-class TodoInput extends StatelessWidget {
-  TodoInput({Key? key}) : super(key: key);
+class TodoInput extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _TodoInputState();
+}
+
+class _TodoInputState extends State<TodoInput> {
   final TextEditingController _controller = new TextEditingController();
+  int selectStatus = 0;
 
   @override
   Widget build(BuildContext context) {
-    int selectStatus = Provider.of<TodoModel>(context).selectStatus;
     print('build: TodoInput');
     return Container(
       padding: EdgeInsets.only(top: 10, bottom: 10, right: 40, left: 40),
@@ -108,10 +112,6 @@ class TodoInput extends StatelessWidget {
                     border: OutlineInputBorder(),
                     labelText: 'todo ...',
                   ),
-                  onChanged: (text) {
-                    Provider.of<TodoModel>(context, listen: false)
-                        .setText(text: text);
-                  },
                 ),
               ),
               Padding(
@@ -121,9 +121,9 @@ class TodoInput extends StatelessWidget {
                   items: Provider.of<TodoModel>(context, listen: false)
                       .statusList(),
                   onChanged: (status) {
-                    status = status != null ? status : 0;
-                    Provider.of<TodoModel>(context)
-                        .setSelectStatus(status: status);
+                    setState(() {
+                      selectStatus = status != null ? status : 0;
+                    });
                   },
                 ),
               ),
@@ -131,8 +131,12 @@ class TodoInput extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Provider.of<TodoModel>(context, listen: false).addTodo();
+              Provider.of<TodoModel>(context, listen: false)
+                  .addTodo(text: _controller.text, status: selectStatus);
               _controller.clear();
+              setState(() {
+                selectStatus = 0;
+              });
             },
             child: Text('追加'),
           ),
