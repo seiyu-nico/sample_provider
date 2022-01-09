@@ -68,8 +68,12 @@ class TodoListTile extends StatelessWidget {
 }
 
 // Todo入力欄
-class TodoInput extends StatelessWidget {
-  TodoInput({Key? key}) : super(key: key);
+class TodoInput extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _TodoInputState();
+}
+
+class _TodoInputState extends State<TodoInput> {
   final TextEditingController _controller = new TextEditingController();
 
   @override
@@ -85,14 +89,11 @@ class TodoInput extends StatelessWidget {
               border: OutlineInputBorder(),
               labelText: 'todo ...',
             ),
-            onChanged: (text) {
-              Provider.of<TodoModel>(context, listen: false)
-                  .setText(text: text);
-            },
           ),
           ElevatedButton(
             onPressed: () {
-              Provider.of<TodoModel>(context, listen: false).addTodo();
+              Provider.of<TodoModel>(context, listen: false)
+                  .addTodo(text: _controller.text);
               _controller.clear();
             },
             child: Text('追加'),
