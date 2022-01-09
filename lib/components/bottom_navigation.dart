@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sample_provider/screens/todo_use_provider_screen.dart';
-// import 'package:sample_provider/screens/todo_not_use_provider_screen.dart';
+import 'package:sample_provider/screens/todo_not_use_provider_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _currentIndex = 0;
   final _pageWidgets = [
     TodoUseProviderScreen(),
-    // TodoNotUseProviderScreen(),
+    TodoNotUseProviderScreen(),
   ];
 
   @override
