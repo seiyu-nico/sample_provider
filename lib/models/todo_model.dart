@@ -13,7 +13,16 @@ class TodoModel with ChangeNotifier {
   ];
 
   List<Todo> get todos => _todos;
-  List<Map> get statusList => _statusList;
+  int get selectStatus => _selectStatus;
+
+  List<DropdownMenuItem<int>> statusList() {
+    return _statusList.map((status) {
+      return DropdownMenuItem<int>(
+        value: status['status'],
+        child: Text(status['label']),
+      );
+    }).toList();
+  }
 
   void addTodo() {
     _todos.add(Todo(title: _inputText, status: _selectStatus));
@@ -27,6 +36,11 @@ class TodoModel with ChangeNotifier {
 
   void setText({String text = ''}) {
     _inputText = text;
+  }
+
+  void setSelectStatus({required int status}) {
+    _selectStatus = status;
+    notifyListeners();
   }
 
   void updateStatus({required int index, required int status}) {
