@@ -56,11 +56,34 @@ class TodoListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build: TodoListTile');
+    final list = Provider.of<TodoModel>(context).statusList;
+    List<DropdownMenuItem<int>> items = list.map((status) {
+      return DropdownMenuItem<int>(
+        value: status['status'],
+        child: Text(status['label']),
+      );
+    }).toList();
+
     return Consumer<TodoModel>(
       builder: (context, todoModel, child) {
         final todo = todoModel.getTodo(index);
-        return ListTile(
-          title: Text(todo.title),
+        return Row(
+          children: <Widget>[
+            Expanded(
+              child: ListTile(
+                title: Text(todo.title),
+              ),
+            ),
+            DropdownButton<int>(
+              value: todo.status,
+              items: items,
+              onChanged: (status) {
+                status = status != null ? status : 0;
+                Provider.of<TodoModel>(context, listen: false)
+                    .updateStatus(index: index, status: status);
+              },
+            ),
+          ],
         );
       },
     );

@@ -11,9 +11,9 @@ class TodoNotUseProviderScreen extends StatefulWidget {
 class _TodoNotUseProviderScreenState extends State {
   List<Todo> todos = [];
 
-  void addTodo(String title) {
+  void addTodo(String title, int status) {
     setState(() {
-      todos.add(Todo(title: title));
+      todos.add(Todo(title: title, status: status));
     });
   }
 
